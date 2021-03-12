@@ -1,205 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 
-	<script src="https://apis.google.com/js/api.js"></script>
-	<link rel="stylesheet" href="style.css" type="text/css" >
+    <script src="https://apis.google.com/js/api.js"></script>
+    <link rel="stylesheet" href="assets/style.css" type="text/css">
 </head>
+
 <body>
-<div class='heroMenu'>
-	<div class="heroImage"></div>
-	<div class="heroText">
-		<h1>See when you first subscribed to your favorite youtubers</h1>
-			<h2>An easier way to unsubscribe to youtubers</h2><br>
-			<h3>Login yourself to see who you first subscribed to!</h3>
-			<button class="loginBtn" onclick="authenticate().then(loadClient)"></button>
-	</div>
-</div>
+    <!-- <button onclick="authenticate().then(loadClient)"> authorize and load </button> -->
+    <button onclick="execute()"> execute </button>
+    <div class='heroMenu'>
+        <div class="heroImage"></div>
+        <div class="heroText">
+            <h1>See when you first subscribed to your favorite youtubers</h1>
+            <h2>An easier way to unsubscribe to youtubers</h2><br>
+            <h3>Login yourself to see who you first subscribed to!</h3>
+            <button class="loginBtn" onclick="authenticate().then(loadClient)"></button>
+        </div>
+    </div>
 
-<ul id="list"></ul>
+    <ul id="list"></ul>
 
-<footer>This website doesn't keep any of its user data.</footer>
-<script>
-
-const bigList = [];
-
-function compare(a, b){
-	const listA = a.snippet.publishedAt;
-	const listB = b.snippet.publishedAt;
-	let comparison = 0;
-  if (listA > listB) {
-    comparison = 1;
-  } else {
-    comparison = -1;
-  }
-  return comparison;
-}
-
-function unsubToAll(){
-	let hNode = document.createElement("h1");
-	let textNode = document.createTextNode("You are now unsubscribed to all the channels.");
-	hNode.append.className = "unsubText";
-	hNode.appendChild(textNode);
-
-	document.getElementsByTagName("BODY")[0].appendChild(hNode);
-	console.log("unsub click");
-	for (let i = 0; i < bigList.length; i++) {
-		deleteAllSubs(bigList[i].id);
-	}
-}
-function showOnScreen(){ 
-	let heroDiv = document.getElementsByClassName("heroMenu");
-	heroDiv[0].style.display = "none";
-		// append to html
-
-		let DeleteAllBtnNode = document.createElement("button");
-		DeleteAllBtnNode.innerHTML = "UNSUBSCIBE TO ALL";
-		DeleteAllBtnNode.className = "unsubToAlButton";
-		DeleteAllBtnNode.setAttribute("onclick","unsubToAll()");
-		document.getElementsByTagName("BODY")[0].appendChild(DeleteAllBtnNode);
-
-	for(let i = 0; i < bigList.length; i++){
-			let subscribedAtDate = new Date(bigList[i].snippet.publishedAt).toLocaleDateString(undefined, {year: 'numeric', month: 'long', day: 'numeric'});
-			
-			let btnNode = document.createElement("button")
-			btnNode.innerHTML = "UNSUBSCRIBE";
-			btnNode.className = "unsubscribeButton";
-			btnNode.setAttribute("onclick","deleteSub(this.parentNode.id, this)");
-			// btnNode.onclick = testFunctie();
-			// "deleteSub(bigList[i].id)";
-			let aNode = document.createElement("a");
-			aNode.href = ("https://youtube.com/channel/" + bigList[i].snippet.resourceId.channelId);
-			aNode.target = "_blank";
-			let liNode = document.createElement("li");
-			liNode.id = bigList[i].id;
-			let pNodeOne = document.createElement("p");
-			pNodeOne.className = "youtuberName";
-			let pNodeTwo = document.createElement("p");
-			let channelNameNode = document.createTextNode(bigList[i].snippet.title);
-			let subscribedAtNode = document.createTextNode(subscribedAtDate);
-			let img = new Image();
-			img.src = bigList[i].snippet.thumbnails.medium.url;
-			
-			aNode.appendChild(img);
-			pNodeOne.appendChild(channelNameNode);
-			pNodeTwo.appendChild(subscribedAtNode);
-			
-			aNode.appendChild(pNodeOne);
-			liNode.appendChild(aNode);
-			liNode.appendChild(pNodeTwo);
-			liNode.appendChild(btnNode);
-			document.getElementById("list").appendChild(liNode);
-		}
-}
-
-  /**
-   * Sample JavaScript code for youtube.subscriptions.list
-   * See instructions for running APIs Explorer code samples locally:
-   * https://developers.google.com/explorer-help/guides/code_samples#javascript
-   */
-
-  function authenticate() {
-    return gapi.auth2.getAuthInstance()
-        .signIn({scope: "https://www.googleapis.com/auth/youtube.force-ssl"})
-		.then(function() { console.log("Sign-in successful");
-		let loginButton = document.getElementsByClassName("loginBtn");
-		loginButton[0].style.display = "none"; },
-              function(err) { console.error("Error signing in", err); });
-  }
-  function loadClient() { 
-    gapi.client.setApiKey("api");
-    return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-        .then(function() { console.log("GAPI client loaded for API"); execute(null) },
-              function(err) { console.error("Error loading GAPI client for API", err); });
-  }
-  // Make sure the client is loaded and sign-in is complete before calling this method.
-  function execute(nextPageT) {
-    return gapi.client.youtube.subscriptions.list({
-		"part": "snippet, id",
-      	"maxResults": 50,
-		"mine": true,
-		"pageToken": nextPageT
-    })
-        .then(function(response) {
-				// Handle the results here (response.result has the parsed body).
-				let nextPage = response.result.nextPageToken;
-				let list = response.result.items;
-				// console.log("Response", response);
-				for(let i = 0; i < list.length; i ++){
-					// append to array
-					bigList.push(list[i]);
-				}
-				if(nextPage){
-					execute(nextPage);
-				}
-				// done loading all pages
-				else{
-					// sorting the list
-					bigList.sort(compare);
-					console.log("sorted: ", bigList)
-					showOnScreen();
-				}
-              },
-              function(err) { console.error("Execute error", err); });
-  }
-  gapi.load("client:auth2", function() {
-    gapi.auth2.init({client_id: "api.apps.googleusercontent.com"});
-  });
-
-  function deleteSub(accountId, buttonElement) {
-	buttonElement.parentNode.remove(buttonElement.parentNode);
-    return gapi.client.youtube.subscriptions.delete({
-      "id": accountId
-    })
-        .then(function(response) {
-				// Handle the results here (response.result has the parsed body).
-				for(let i = 0; i < bigList.length; i++){
-		  			if (bigList[i].id === buttonElement.parentNode.id){
-			  			bigList.splice(i, 1);
-			  			break;
-		 			 }
-	  			}
-	  		console.log(bigList);
-			console.log("Response", response);
-              },
-              function(err) { console.error("Execute error", err); });
-  }
-  gapi.load("client:auth2", function() {
-	gapi.auth2.init({client_id: "710939585923-5tbgbnbgavcotqp8183ij5il05kpbd5r.apps.googleusercontent.com"});
-  });
-
-  function deleteAllSubs(accountId) {
-    return gapi.client.youtube.subscriptions.delete({
-      "id": accountId
-    })
-        .then(function(response) {
-			let x = document.getElementsByTagName("ul")[0];
-			let y = document.getElementsByTagName("footer")[0];
-			x.parentNode.remove(x);
-			y.parentNode.remove(y);
-
-	  		console.log(bigList);
-			console.log("Response", response);
-              },
-              function(err) { console.error("Execute error", err); });
-  }
-  gapi.load("client:auth2", function() {
-	gapi.auth2.init({client_id: "api.apps.googleusercontent.com"});
-  });
-
-  function testFunctie(buttonElement){
-	  for(let i = 0; i < bigList.length; i++){
-		  if (bigList[i].id === buttonElement.parentNode.id){
-			  bigList.splice(i, 1);
-			  break;
-		  }
-	  }
-	  console.log(bigList);
-	  buttonElement.parentNode.remove(buttonElement.parentNode);
-  }
-</script>
+    <footer>This website doesn't keep any of its user data.</footer>
+    <script src="script.js"></script>
 </body>
+
 </html>

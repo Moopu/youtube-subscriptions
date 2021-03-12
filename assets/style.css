@@ -1,0 +1,141 @@
+html,
+body {
+    height: 100%;
+    width: 100%;
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 14px;
+    color: black;
+    margin: 0px;
+}
+
+img {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    float: left;
+    margin-right: 7px;
+}
+
+p {
+    float: left;
+    width: 70%;
+    margin: 5px;
+}
+
+ul {
+    margin: auto auto;
+    width: 35%;
+}
+
+li {
+    list-style: none;
+    padding: 5px;
+    width: 80%;
+    height: 115px;
+    margin: 0px;
+    clear: right;
+}
+
+a {
+    color: black;
+}
+
+.youtuberName {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.loginBtn {
+    background: url(images/btn_google_signin_dark_normal_web.png) no-repeat;
+    cursor: pointer;
+    border: solid 0px;
+    width: 189px;
+    height: 44px;
+    padding: 0px;
+}
+
+.loginBtn:active {
+    background: url(images/btn_google_signin_dark_focus_web.png) no-repeat;
+}
+
+header {
+    background: #4285f4;
+    height: 7%;
+}
+
+footer {
+    float: right;
+    background: transparent;
+    height: 3%;
+}
+
+.heroMenu {
+    height: 97%;
+    width: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+}
+
+.heroImage {
+    height: 83%;
+    width: 20%;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("images/youtube-api-v0.3.PNG") no-repeat;
+    display: block;
+    margin: auto auto;
+}
+
+.heroText {
+    text-align: center;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.unsubscribeButton {
+    font-family: Roboto, Arial, sans-serif;
+    padding: 10px 16px;
+    background: #c00;
+    color: white;
+    border: 0px;
+    border-radius: 2px;
+    cursor: pointer;
+    float: left;
+}
+
+.unsubText {
+    width: 20%;
+    height: 50px;
+    margin: auto auto;
+}
+
+.unsubToAlButton {
+    font-family: Roboto, Arial, sans-serif;
+    padding: 10px 16px;
+    background: #c00;
+    color: white;
+    border: 0px;
+    border-radius: 2px;
+    cursor: pointer;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    float: right;
+}
+
+@media only screen and (max-width: 600px) {
+    ul {
+        width: 100%;
+        /* min-height:97%; */
+    }
+    li {
+        width: 100%;
+    }
+    .heroImage {
+        width: 80%;
+        height: 73%;
+    }
+    .heroText {
+        width: 100%;
+    }
+}
