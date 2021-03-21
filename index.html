@@ -5,28 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js" integrity="sha512-nOQuvD9nKirvxDdvQ9OMqe2dgapbPB7vYAMrzJihw5m+aNcf0dX53m6YxM4LgA9u8e9eg9QX+/+mPu8kCNpV2A==" crossorigin="anonymous"></script>
     <script src="https://apis.google.com/js/api.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/style.css" type="text/css">
 </head>
 
 <body>
-    <!-- <button onclick="authenticate().then(loadClient)"> authorize and load </button> -->
-    <button onclick="execute()"> execute </button>
-    <div class='heroMenu'>
-        <div class="heroImage"></div>
-        <div class="heroText">
-            <h1>See when you first subscribed to your favorite youtubers</h1>
-            <h2>An easier way to unsubscribe to youtubers</h2><br>
-            <h3>Login yourself to see who you first subscribed to!</h3>
+    <div class="container">
+        <div id='header'>
+            <ul>
+            <li><a class='custom-underline' href='https://github.com/Moopu/youtube-subscriptions/' target="_blank">Github</a></li>
+            <li><a class='custom-underline' href='example.html'>Example view</a></li>
+        </ul>
+        </div>
+
+        <div class='heroMenu'>
+            <h1>See when you first subscribed to your favourite youtubers</h1>
+            <h2>Login yourself to see who you first subscribed to!</h2>
             <button class="loginBtn" onclick="authenticate().then(loadClient)"></button>
         </div>
+        <div class='content'>
+            
+        </div>
+
+        <ul id="list" class="youtuberList"></ul>
+
+        <footer>
+            <p>Made with ☕ by <a href='https://twitter.com/MooKoen'>Koen</a></p>
+        </footer>
     </div>
-
-    <ul id="list"></ul>
-
-    <footer>This website doesn't keep any of its user data.</footer>
-    <script src="script.js"></script>
+    <script src="script.min.js"></script>
 </body>
 
 </html>

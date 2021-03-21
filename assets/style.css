@@ -1,49 +1,88 @@
+/* * {position: relative; outline: none;
+} */
+
 html,
 body {
-    height: 100%;
+    margin: 0px;
+    font-family: 'Open Sans', sans-serif;
     width: 100%;
-    font-family: "Lucida Console", Monaco, monospace;
-    font-size: 14px;
+    height: 100%;
+    outline: none
+}
+
+.container {
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 50px auto auto 50px;
+    grid-template-areas: "header header header header" ". content content ." "footer footer footer footer";
+}
+
+#header {
+    align-content: flex-end;
+    grid-area: header;
+    /* background: #ffee58; */
+    border-bottom: 1px solid #dee2e6;
     color: black;
-    margin: 0px;
+    padding: 10px;
+    margin-bottom: 20px;
 }
 
-img {
-    width: 80px;
-    height: 80px;
-    border-radius: 40px;
-    float: left;
-    margin-right: 7px;
+#header li {
+    width: auto;
+    float: right;
+    margin-left: 10px;
+    position: relative;
+    font-size: 20px;
+    font-weight: 600;
 }
 
-p {
-    float: left;
-    width: 70%;
-    margin: 5px;
+.content {
+    grid-area: content;
+    padding: 20px;
 }
-
-ul {
-    margin: auto auto;
-    width: 35%;
+.heroMenu{
+    grid-area: content;
+    width: 100%;
+    background-image: linear-gradient( 0deg, #00000088 30%, #ffffff44 100%), url(images/youtube-banner-2.PNG);
+    /* background: linear-gradient(0 deg, #00000088 30%, #ffffff44 100%) */
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    margin-bottom:20px;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
 }
-
-li {
-    list-style: none;
-    padding: 5px;
-    width: 80%;
-    height: 115px;
-    margin: 0px;
-    clear: right;
+.heroMenu h1 {
+    position: absolute;
+    right: 50px;
+    bottom: 130px;
 }
-
-a {
-    color: black;
+.heroMenu h2 {
+    position: absolute;
+    right: 50px;
+    bottom: 100px;
 }
-
-.youtuberName {
-    font-size: 18px;
-    font-weight: 700;
+.heroMenu .loginBtn {
+    position: absolute;
+    right: 50px;
+    bottom: 70px;
 }
+/* .heroMenu:before {
+    grid-area: content;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+  background-image: url('https://assets.digitalocean.com/labs/images/community_bg.png',0.5);
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: cover;
+} */
 
 .loginBtn {
     background: url(images/btn_google_signin_dark_normal_web.png) no-repeat;
@@ -52,90 +91,107 @@ a {
     width: 189px;
     height: 44px;
     padding: 0px;
-}
-
-.loginBtn:active {
-    background: url(images/btn_google_signin_dark_focus_web.png) no-repeat;
-}
-
-header {
-    background: #4285f4;
-    height: 7%;
+    z-index: 99;
 }
 
 footer {
-    float: right;
-    background: transparent;
-    height: 3%;
+    grid-area: footer;
+    background: #ffee58;
+    padding: 3px;
 }
 
-.heroMenu {
-    height: 97%;
-    width: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+footer p {
+    margin: auto;
+    width: 230px;
+}
+footer a {
+    text-decoration: none;
+    color: black;
+}
+ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
 }
 
-.heroImage {
-    height: 83%;
-    width: 20%;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("images/youtube-api-v0.3.PNG") no-repeat;
+#list {
+    grid-area: content;
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+#list li {
     display: block;
     margin: auto auto;
+    max-height: 390px;
+    min-height: 390px;
 }
 
-.heroText {
-    text-align: center;
+#list li p {
+    font-weight: 600;
+}
+
+#list a {
+    text-decoration: none;
+    color: black;
+}
+
+.youtuberName {
+    min-height: 60px;
+    max-height: 60px;
+
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+
+
+/* test */
+ .active {
+    color:#e03131 !important;
+}
+.left {
+    float: left !important;
+}
+.custom-underline,
+.custom-underline:hover,
+.custom-underline:focus,
+.custom-underline:active {
+    color: black;
+    text-decoration: none;
+}
+
+.custom-underline::after {
+    content: "";
     position: absolute;
-    top: 25%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
 }
 
-.unsubscribeButton {
-    font-family: Roboto, Arial, sans-serif;
-    padding: 10px 16px;
-    background: #c00;
-    color: white;
-    border: 0px;
-    border-radius: 2px;
-    cursor: pointer;
-    float: left;
+li .custom-underline::after {
+    top: 90%;
+    height: 2px;
+    width: 0%;
+    left: 5%;
+    background-color: #ffee58;
+    transition: 0.5s ease all .3s;
 }
 
-.unsubText {
-    width: 20%;
-    height: 50px;
-    margin: auto auto;
+li:hover .custom-underline::after {
+    width: 90%;
+    transition: 0.3s ease all;
 }
-
-.unsubToAlButton {
-    font-family: Roboto, Arial, sans-serif;
-    padding: 10px 16px;
-    background: #c00;
-    color: white;
-    border: 0px;
-    border-radius: 2px;
-    cursor: pointer;
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    float: right;
-}
-
 @media only screen and (max-width: 600px) {
-    ul {
-        width: 100%;
-        /* min-height:97%; */
+    .heroMenu {
+        display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
     }
-    li {
-        width: 100%;
+    .heroMenu h1 {
+        display: none;
     }
-    .heroImage {
-        width: 80%;
-        height: 73%;
+    .heroMenu h2{
+        position: static;
+        text-align: right;
+        margin-bottom: 62px;
     }
-    .heroText {
-        width: 100%;
-    }
-}
+  }
